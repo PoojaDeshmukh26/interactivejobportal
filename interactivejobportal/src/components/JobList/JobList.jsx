@@ -11,17 +11,18 @@ const JobList = () => {
         setLoading(true);
         setError('');
         try {
-            const response = await axios.get('', {
+            const response = await axios.get('https://jsearch.p.rapidapi.com/search', { // Add the correct API endpoint
                 params: {
-                    publisher: process.env.REACT_APP_INDEED_API_KEY,
-                    q: filter || '',
-                    l: 'USA', 
-                    format: 'json',
-                    v: '2',
-                    limit: 10,
+                    query: filter || 'developer',  // The job title or search query
+                    location: 'USA',  // The location, you can change this dynamically
+                    limit: 10,  // Limit the results
+                },
+                headers: {
+                    'X-RapidAPI-Key': 'ce2813bb6emsh4b1bbdd2c7d7af0p1bb900jsnadf33d3f1d07',  // Your API Key in .env
+                    'X-RapidAPI-Host': 'jsearch.p.rapidapi.com',
                 },
             });
-            setJobs(response.data.results);
+            setJobs(response.data.data);  // Assuming the API response structure
         } catch (err) {
             setError('Failed to fetch jobs');
         } finally {
@@ -34,7 +35,7 @@ const JobList = () => {
     }, [filter]);
 
     return (
-        <div className="container mx-auto p-6 ">
+        <div className="container mx-auto p-6">
             <h1 className="text-3xl font-bold mb-4">Job For You</h1>
             <div className="mb-4">
                 <input
@@ -52,11 +53,11 @@ const JobList = () => {
             {error && <p className="text-red-500">{error}</p>}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {jobs.map((job) => (
-                    <div key={job.jobkey} className="bg-white p-4 rounded shadow-md">
-                        <h2 className="text-xl font-semibold">{job.jobtitle}</h2>
-                        <p className="text-gray-700">{job.company}</p>
-                        <p className="mt-2 text-gray-500">{job.snippet}</p>
-                        <a href={job.url} target="_blank" rel="noopener noreferrer" className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    <div key={job.job_id} className="bg-white p-4 rounded shadow-md"> {/* Assuming job_id is the unique identifier */}
+                        <h2 className="text-xl font-semibold">{job.job_title}</h2> {/* Updated to match expected API response */}
+                        <p className="text-gray-700">{job.employer_name}</p> {/* Updated field */}
+                        <p className="mt-2 text-gray-500">{job.description}</p> {/* Updated field */}
+                        <a href={job.job_apply_link} target="_blank" rel="noopener noreferrer" className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                             Apply
                         </a>
                     </div>
