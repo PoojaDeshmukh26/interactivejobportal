@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+//imported Icons from React Icons ----->
+import {AiOutlineSearch} from 'react-icons/ai'
+import { BsHouseDoor } from 'react-icons/bs'
+import { CiLocationOn } from 'react-icons/ci'
+
 const JobList = () => {
     const [jobs, setJobs] = useState([]);
     const [filter, setFilter] = useState('');
@@ -34,19 +39,29 @@ const JobList = () => {
         fetchJobs();
     }, [filter]);
 
-    return (
+   return (
         <div className="container mx-auto p-6">
-            <h1 className="text-3xl font-bold mb-4">Job For You</h1>
-            <div className="mb-4">
-                <input
-                    type="text"
-                    placeholder="Search for jobs..."
-                    value={filter}
-                    onChange={(e) => setFilter(e.target.value)}
-                    className="border rounded p-2 mr-2"
-                />
-                <button onClick={fetchJobs} className="bg-blue-500 text-white p-3 rounded hover:bg-blue-600">
-                    Search
+        <h1 className="text-3xl font-bold mb-4">Job For You</h1>
+        <div className= 'first Div flex justify-between items-center rounded-[8px] gap-[20px] bg-white p-5 shadow-lg shadow-greyish-700'>
+        <div className='flex gap-2 items-center'>
+    
+            <AiOutlineSearch className='text.[30px] icon'/>
+            <input type ='text' className='bg-transparent text-blue-500 focus :outline-none  w-[100%]'placeholder='Search for jobs...'/>
+            
+            
+            </div>
+            <div className='flex gap-2 items-center'>
+            <BsHouseDoor className='text.[30px] icon'/>
+            <input type ='text' className='bg-transparent text-blue-500 focus :outline-none  w-[100%]'placeholder="Search by Company..."/>
+           
+            
+            </div>
+            <div className='flex gap-2 items-center'>
+            <CiLocationOn className='text.[30px] icon'/>
+            <input type ='text' className='bg-transparent text-blue-500 focus :outline-none  w-[100%]'placeholder="Search by Location..."/>
+            
+            
+            </div>
                 </button>
             </div>
             {loading && <p>Loading jobs...</p>}
