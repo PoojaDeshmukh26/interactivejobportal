@@ -39,7 +39,7 @@ const JobList = () => {
         fetchJobs();
     }, [filter]);
 
-   return (
+return (
         <div className="container mx-auto p-6">
         <h1 className="text-3xl font-bold mb-4">Job For You</h1>
         <div className= 'first Div flex justify-between items-center rounded-[8px] gap-[20px] bg-white p-5 shadow-lg shadow-greyish-700'>
@@ -62,7 +62,12 @@ const JobList = () => {
             
             
             </div>
-                </button>
+            
+            
+            <button onClick={fetchJobs} className="bg-blue-500 text-white p-3 rounded hover:bg-blue-600">
+                Search
+            </button>
+            
             </div>
             {loading && <p>Loading jobs...</p>}
             {error && <p className="text-red-500">{error}</p>}
@@ -79,7 +84,10 @@ const JobList = () => {
                 ))}
             </div>
         </div>
+        
     );
 };
+
+
 
 export default JobList;
